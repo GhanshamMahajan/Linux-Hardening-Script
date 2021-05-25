@@ -64,9 +64,9 @@ if [ "$OS" = "SunOS" ] ; then
 fi
 if [[ "$DIST" = "Red Hat Enterprise Linux Server" ]] || [[ "$DIST" = "CentOS Linux" ]]; then
         echo "This is the $DIST $REV"
-	if [[ $EUID -ne 0 ]]; then
-        echo "This script must be run as root"
-        exit 1
+	if [ "$(id -u)" != "0" ]; then
+   		echo "This script must be run as root" 1>&2  			# Check if script running by root or not
+   		exit 1								#If it's not run by root then it will exit the script
 	fi
 	echo "***************stop and disable the Firewall***************"
 		service firewalld stop
@@ -207,9 +207,9 @@ if [[ "$DIST" = "Red Hat Enterprise Linux Server" ]] || [[ "$DIST" = "CentOS Lin
 	
 elif [[ "$DIST" = "Ubuntu" ]] || [[ "$DIST" = "Debian" ]]; then
         echo "This is the $DIST $REV"
-	if [[ $EUID -ne 0 ]]; then
-        	echo "This script must be run as root"
-        	exit 1
+	if [ "$(id -u)" != "0" ]; then
+   		echo "This script must be run as root" 1>&2  			# Check if script running by root or not
+   		exit 1								#If it's not run by root then it will exit the script
 	fi
 	echo "***************stop and disable the Firewall***************"
 		/etc/init.d/ufw stop
